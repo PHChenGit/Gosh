@@ -1,3 +1,9 @@
+# Project
+
+Gosh
+
+### Golang
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -13,3 +19,29 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+### Goland
+.idea
+
+### VScode
+.vscode
+
+### OSX
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
