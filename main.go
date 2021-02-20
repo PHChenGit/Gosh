@@ -27,7 +27,15 @@ func main() {
 }
 
 func execInput(input string) error {
-	cmd := exec.Command(input)
+	args := strings.Split(input, " ")
+
+	if args[0] == "cd" {
+		err := os.Chdir(args[1])
+
+		return err
+	}
+
+	cmd := exec.Command(args[0], args[1:]...)
 
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
