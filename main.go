@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"os/user"
 	"strings"
 )
 
@@ -13,7 +14,7 @@ func main() {
 	stdin := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Print("> ")
+		showPrompt()
 
 		input, _ := stdin.ReadString('\n')
 		input = strings.TrimSpace(input)
@@ -44,4 +45,12 @@ func execInput(input string) error {
 	err := cmd.Run()
 
 	return err
+}
+
+func showPrompt() {
+	user, _ := user.Current()
+	hostName, _ := os.Hostname()
+	wd, _ := os.Getwd()
+
+	fmt.Printf("%s@%s %s > ", user.Username, hostName, wd)
 }
