@@ -8,7 +8,11 @@ import (
 	"os/exec"
 	"os/user"
 	"strings"
+
+	"Gosh/alias"
 )
+
+var ALIAS = alias.NewAlias()
 
 func main() {
 	stdin := bufio.NewReader(os.Stdin)
@@ -27,9 +31,16 @@ func main() {
 	}
 }
 
+func parseArgs(input string) []string {
+	if strings.Contains(input, "=") {
+		return strings.SplitN(input, " ", 2)
+	}
+	return strings.Split(input, " ")
+}
+
 func execInput(input string) error {
 	input = os.ExpandEnv(input)
-	args := strings.Split(input, " ")
+	args := parseArgs(input)
 
 	if args[0] == "cd" {
 		err := os.Chdir(args[1])
@@ -45,11 +56,17 @@ func execInput(input string) error {
 		return err
 	}
 
-	if args[1] == "unset" {
+	if args[0] == "unset" {
 		key := args[1]
 		err := os.Unsetenv(key)
 
 		return err
+	}
+
+	if args[0] == "alias" {
+		kv := strings.Split(args[1], "=")
+		ALIAS.SetAlias(kv[0], kv[1])
+		return nil
 	}
 
 	cmd := exec.Command(args[0], args[1:]...)
