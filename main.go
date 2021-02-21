@@ -69,13 +69,19 @@ func execInput(input string) error {
 		return nil
 	}
 
+	aliasCmd, err := ALIAS.ExpendAlias(args[0])
+
+	if err == nil {
+		args = strings.Split(strings.ReplaceAll(aliasCmd, "\"", ""), " ")
+	}
+
 	cmd := exec.Command(args[0], args[1:]...)
 
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	err := cmd.Run()
+	err = cmd.Run()
 
 	return err
 }
